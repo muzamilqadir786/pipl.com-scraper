@@ -30,7 +30,7 @@ class PiplspiderSpider(scrapy.Spider):
         sheet_names = xl_workbook.sheet_names()
         print('Sheet Names', sheet_names)
 
-        xl_sheet = xl_workbook.sheet_by_name(sheet_names[1])
+        xl_sheet = xl_workbook.sheet_by_name(sheet_names[0])
         # num_cols = xl_sheet.ncols   # Number of columns
 
         row = xl_sheet.row(0)  # 1st row
@@ -45,7 +45,7 @@ class PiplspiderSpider(scrapy.Spider):
         return rows
 
     def parse(self, response):
-        file = 'contacts.xlsx'
+        file = 'Spread-NewList09-29-15.xls'
         #Getting phone numbers from sheet2 of contacts.xlsx file
         rows = self.read_xls(file)
         """
@@ -53,7 +53,7 @@ class PiplspiderSpider(scrapy.Spider):
         """
         rb = open_workbook(file)
         wb = copy(rb)
-        sheet = wb.get_sheet(1)
+        sheet = wb.get_sheet(0)
         # sheet.write(0,23,'Phone')
         print sheet
 
@@ -71,7 +71,7 @@ class PiplspiderSpider(scrapy.Spider):
             # start = 90
             # rows = rows[start:]
 
-            for ctr,row in enumerate(rows,start=3137):
+            for ctr,row in enumerate(rows,start=1):
                 row = rows[ctr]
                 # print row
                 phone_col = row[47].value
@@ -137,6 +137,8 @@ class PiplspiderSpider(scrapy.Spider):
                         if all(x in full_name.split() for x in pipl_name.split()) or all(x in pipl_name.split() for x in full_name.split()) or sheet_phone in pipl_phones:
                             print "name matched exactly"
                             json_addresses = hxs.xpath('//ul[@class="addresses"]/li')
+
+
                             """
                             Removing dupes
                             """
@@ -165,16 +167,8 @@ class PiplspiderSpider(scrapy.Spider):
                                 print add
 
                             wb.save('file.xls')
-                        # elif sheet_phone in pipl_phones:
-                        #     print "hurrah I got"
-
 
                 time.sleep(2)
-
-
-
-
-
 
         except Exception as e:
             print e

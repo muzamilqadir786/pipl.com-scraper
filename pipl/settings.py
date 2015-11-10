@@ -13,7 +13,7 @@ BOT_NAME = 'pipl'
 SPIDER_MODULES = ['pipl.spiders']
 NEWSPIDER_MODULE = 'pipl.spiders'
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
+# Crawl responsibly by identifying yourself (and your website) knil jmbn on the user-agent
 #USER_AGENT = 'pipl (+http://www.yourdomain.com)'
 
 USER_AGENT_LIST = [
